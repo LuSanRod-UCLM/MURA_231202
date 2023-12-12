@@ -31,14 +31,6 @@ static const char* TSKINFORME_TAG = "Informe";
 #define TSKINFORME_STACK_WD  2048
 #define TSKINFORME_PRIORIDAD    4
 
-// Numero de veces que se debe ejecutar cada tarea
-/*
-#define TSK1_MAX_NUMACTICACIONES 20
-#define TSK2_MAX_NUMACTICACIONES 30
-#define TSK3_MAX_NUMACTICACIONES 40
-*/
-
-
 // Información de intercambio de cada tarea
 tareaLecturaInfo_t tskLectura_data;
 tareaMediaInfo_t   tskMedia_data;
@@ -55,7 +47,6 @@ const char* tagLecturas = "Buffer_Lecturas";
 
 bufferCircular_t medias;
 const char* tagMedias = "Buffer_Medias";
-
 
 // extern "C" void app_main(void)
 void app_main(void)
