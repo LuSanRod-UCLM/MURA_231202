@@ -23,7 +23,7 @@ bool bufferCircularCrea( bufferCircular_t* pBuffer, const char* etiqueta)
     else
     {
         pBuffer->err = BUFFER_ERR_MUTEX;
-        ESP_LOGI(pBuffer->tag, "Error al intentar crear el mutex");
+        ESP_LOGE(pBuffer->tag, "Error al intentar crear el mutex");
     }
     return (pBuffer->err == BUFFER_OK);
 }
@@ -34,7 +34,7 @@ bool bufferCircularLibera( bufferCircular_t* pBuffer )
     /* Libera el semaforo de exclusión mutua */
     vSemaphoreDelete(pBuffer->mutex);
     pBuffer->err = BUFFER_OK;
-    ESP_LOGI(pBuffer->tag, "Mutex liberado");
+    ESP_LOGD(pBuffer->tag, "Mutex liberado");
 
     return (pBuffer->err == BUFFER_OK);
 }
@@ -47,18 +47,18 @@ bool bufferCircularMete( bufferCircular_t* pBuffer, double valor )
         if (pBuffer->numElementos < NUMELEMENTOS)
         {
             (pBuffer->valor)[pBuffer->cabeza++] = valor;
-            ESP_LOGI(pBuffer->tag, "Introducido valor: %f en posición %d", (pBuffer->valor)[(pBuffer->cabeza)-1], (pBuffer->cabeza)-1);
+            ESP_LOGD(pBuffer->tag, "Introducido valor: %f en posición %d", (pBuffer->valor)[(pBuffer->cabeza)-1], (pBuffer->cabeza)-1);
 
             pBuffer->cabeza = pBuffer->cabeza % NUMELEMENTOS;
             pBuffer->numElementos++;
-            ESP_LOGI(pBuffer->tag, "%d elementos almacenados", (pBuffer->numElementos));
+            ESP_LOGD(pBuffer->tag, "%d elementos almacenados\n\n", (pBuffer->numElementos));
 
             pBuffer->err = BUFFER_OK;
         }
         else
         {
-            ESP_LOGI(pBuffer->tag, "Fallo por buffer lleno");
-            ESP_LOGI(pBuffer->tag, "al intentar introducir valor: %f en posición %d", valor, (pBuffer->cabeza));
+            ESP_LOGE(pBuffer->tag, "Fallo por buffer lleno");
+            ESP_LOGE(pBuffer->tag, "al intentar introducir valor: %f en posición %d", valor, (pBuffer->cabeza));
 
             pBuffer->err = BUFFER_ERR_LLENO;
         }
@@ -66,8 +66,8 @@ bool bufferCircularMete( bufferCircular_t* pBuffer, double valor )
     }
     else
     {
-        ESP_LOGI(pBuffer->tag, "Fallo al intentar tomar mutex");
-        ESP_LOGI(pBuffer->tag, "para introducir valor: %f en posición %d", valor, (pBuffer->cabeza));
+        ESP_LOGE(pBuffer->tag, "Fallo al intentar tomar mutex");
+        ESP_LOGE(pBuffer->tag, "para introducir valor: %f en posición %d", valor, (pBuffer->cabeza));
 
         pBuffer->err = BUFFER_ERR_MUTEX;
     }
@@ -83,18 +83,18 @@ bool bufferCircularSaca( bufferCircular_t* pBuffer, double* pValor )
         if (pBuffer->numElementos)
         {
             *pValor = (pBuffer->valor)[pBuffer->cola++];
-            ESP_LOGI(pBuffer->tag, "Retirado valor: %f de posición %d", *pValor, (pBuffer->cola)-1);
+            ESP_LOGD(pBuffer->tag, "Retirado valor: %f de posición %d", *pValor, (pBuffer->cola)-1);
 
             pBuffer->cola = pBuffer->cola % NUMELEMENTOS;
             pBuffer->numElementos--;
-            ESP_LOGI(pBuffer->tag, "%d elementos almacenados", (pBuffer->numElementos));
+            ESP_LOGD(pBuffer->tag, "%d elementos almacenados", (pBuffer->numElementos));
 
             pBuffer->err = BUFFER_OK;
         }
         else
         {
-            ESP_LOGI(pBuffer->tag, "Fallo por buffer vacio");
-            ESP_LOGI(pBuffer->tag, "al intentar retirar valor en posición %d", (pBuffer->cola));
+            ESP_LOGE(pBuffer->tag, "Fallo por buffer vacio");
+            ESP_LOGE(pBuffer->tag, "al intentar retirar valor en posición %d", (pBuffer->cola));
 
             pBuffer->err = BUFFER_ERR_VACIO;
         }
@@ -102,8 +102,8 @@ bool bufferCircularSaca( bufferCircular_t* pBuffer, double* pValor )
     }
     else
     {
-        ESP_LOGI(pBuffer->tag, "Fallo al intentar tomar mutex");
-        ESP_LOGI(pBuffer->tag, "para retirar valor en posición %d", (pBuffer->cabeza));
+        ESP_LOGE(pBuffer->tag, "Fallo al intentar tomar mutex");
+        ESP_LOGE(pBuffer->tag, "para retirar valor en posición %d", (pBuffer->cabeza));
 
         pBuffer->err = BUFFER_ERR_MUTEX;
     }
@@ -124,8 +124,7 @@ bool bufferCircularLleno( bufferCircular_t* pBuffer )
     }
     else
     {
-        ESP_LOGI(pBuffer->tag, "Fallo al intentar tomar mutex");
-
+        ESP_LOGE(pBuffer->tag, "Fallo al intentar tomar mutex");
         pBuffer->err = BUFFER_ERR_MUTEX;
     }
 
@@ -145,8 +144,7 @@ bool bufferCircularVacio( bufferCircular_t* pBuffer )
     }
     else
     {
-        ESP_LOGI(pBuffer->tag, "Fallo al intentar tomar mutex");
-
+        ESP_LOGE(pBuffer->tag, "Fallo al intentar tomar mutex");
         pBuffer->err = BUFFER_ERR_MUTEX;
     }
 

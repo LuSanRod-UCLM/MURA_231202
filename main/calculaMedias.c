@@ -27,8 +27,8 @@ void tareaMedia(void* pParametros)
     bufferCircular_t*  pLecturas = ((tareaMediaInfo_t*)pData)->pLecturas;
     bufferCircular_t*  pMedias   = ((tareaMediaInfo_t*)pData)->pMedias;
 
-    ESP_LOGI(pConfig->tag, "Periodo de planificación: %lu ms", pConfig->periodo);
-    ESP_LOGI(pConfig->tag, "Número inicial de activaciones: %lu", pConfig->numActivaciones);
+    ESP_LOGD(pConfig->tag, "Periodo de planificación: %lu ms", pConfig->periodo);
+    ESP_LOGD(pConfig->tag, "Número inicial de activaciones: %lu", pConfig->numActivaciones);
     // ESP_LOGI(pConfig->tag, "LED en pin %u. Nivel inicial: %s", pLED->pin, (pLED->nivel==0)? "LOW":"HIGH");
     // ESP_LOGI(pConfig->tag, "Mutex en %x", (unsigned int)(pLED->sem));
 

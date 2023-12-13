@@ -109,7 +109,7 @@ void tareaLectura(void* pParametros)
 
         /* Lectura del valor del potenciometro */
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, CANAL_POTENCIOMETRO, &adc_raw[0]));
-        ESP_LOGI(pConfig->tag, "ADC%d CANAL[%d] Raw Data: %d", ADC_UNIT_1 + 1, CANAL_POTENCIOMETRO, adc_raw[0]);
+        ESP_LOGD(pConfig->tag, "ADC%d CANAL[%d] Raw Data: %d", ADC_UNIT_1 + 1, CANAL_POTENCIOMETRO, adc_raw[0]);
         if (do_calibracion_potenciometro) {
             ESP_ERROR_CHECK(adc_cali_raw_to_voltage(calibracion_potenciometro, adc_raw[0], &voltage[0]));
             ESP_LOGI(pConfig->tag, "ADC%d CANAL[%d] Voltaje: %d mV", ADC_UNIT_1 + 1, CANAL_POTENCIOMETRO, voltage[0]);
@@ -117,7 +117,7 @@ void tareaLectura(void* pParametros)
 
         /* Lectura del valor del sensor de presion */
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, CANAL_PRESION, &adc_raw[1]));
-        ESP_LOGI(pConfig->tag, "ADC%d CANAL[%d] Raw Data: %d", ADC_UNIT_1 + 1, CANAL_PRESION, adc_raw[1]);
+        ESP_LOGD(pConfig->tag, "ADC%d CANAL[%d] Raw Data: %d", ADC_UNIT_1 + 1, CANAL_PRESION, adc_raw[1]);
         if (do_calibracion_presion) {
             ESP_ERROR_CHECK(adc_cali_raw_to_voltage(calibracion_presion, adc_raw[1], &voltage[1]));
             ESP_LOGI(pConfig->tag, "ADC%d CANAL[%d] Voltaje: %d mV", ADC_UNIT_1 + 1, CANAL_PRESION, voltage[1]);
