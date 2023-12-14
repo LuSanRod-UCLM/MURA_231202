@@ -19,7 +19,7 @@
 static const char* TSKLECTURA_TAG = "LecturaSensor";
 #define TSKLECTURA_PERIODO_MS 500
 #define TSKLECTURA_STACK_WD  2048
-#define TSKLECTURA_PRIORIDAD    4
+#define TSKLECTURA_PRIORIDAD    6
 
 static const char* TSKMEDIA_TAG = "CalculoMedia";
 #define TSKMEDIA_PERIODO_MS 6000
@@ -27,9 +27,9 @@ static const char* TSKMEDIA_TAG = "CalculoMedia";
 #define TSKMEDIA_PRIORIDAD    4
 
 static const char* TSKINFORME_TAG = "Informe";
-#define TSKINFORME_PERIODO_MS 120000
+#define TSKINFORME_PERIODO_MS 60000
 #define TSKINFORME_STACK_WD  2048
-#define TSKINFORME_PRIORIDAD    4
+#define TSKINFORME_PRIORIDAD    2
 
 // Información de intercambio de cada tarea
 tareaLecturaInfo_t tskLectura_data;
