@@ -19,7 +19,7 @@
 static const char* TSKLECTURA_TAG = "LecturaSensor";
 #define TSKLECTURA_PERIODO_MS 500
 #define TSKLECTURA_STACK_WD  2048
-#define TSKLECTURA_PRIORIDAD    6
+#define TSKLECTURA_PRIORIDAD    7
 
 static const char* TSKMEDIA_TAG = "CalculoMedia";
 #define TSKMEDIA_PERIODO_MS 6000
