@@ -17,8 +17,9 @@ el selector de canal (multiplexor) de entrada al ADC
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-
 #include "esp_adc/adc_oneshot.h"
+
+#define LOG_LOCAL_LEVEL ESP_LOG_NONE
 #include "esp_log.h"
 
 #include "bufferCircular.h"
@@ -105,7 +106,7 @@ void tareaLectura(void* pParametros)
         xTaskDelayUntil(&activacionPrevia, periodo);
 
         pConfig->numActivaciones++;
-        ESP_LOGI(pConfig->tag, "Numero de activaciones: %lu", pConfig->numActivaciones);
+        ESP_LOGD(pConfig->tag, "Numero de activaciones: %lu", pConfig->numActivaciones);
 
         /* Lectura del valor del potenciometro */
         ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, CANAL_POTENCIOMETRO, &adc_raw[0]));
@@ -120,7 +121,7 @@ void tareaLectura(void* pParametros)
         ESP_LOGD(pConfig->tag, "ADC%d CANAL[%d] Raw Data: %d", ADC_UNIT_1 + 1, CANAL_PRESION, adc_raw[1]);
         if (do_calibracion_presion) {
             ESP_ERROR_CHECK(adc_cali_raw_to_voltage(calibracion_presion, adc_raw[1], &voltage[1]));
-            ESP_LOGI(pConfig->tag, "ADC%d CANAL[%d] Voltaje: %d mV", ADC_UNIT_1 + 1, CANAL_PRESION, voltage[1]);
+            ESP_LOGD(pConfig->tag, "ADC%d CANAL[%d] Voltaje: %d mV", ADC_UNIT_1 + 1, CANAL_PRESION, voltage[1]);
         }
 
         /* Incluye el valor leido del potenciómetro en el buffer de lecturas */

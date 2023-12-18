@@ -4,6 +4,8 @@
 
 // #include <freertos/FreeRTOS.h>
 // #include <freertos/task.h>
+
+#define LOG_LOCAL_LEVEL ESP_LOG_INFO
 #include "esp_log.h"
 #include "freertos/semphr.h"
 
@@ -47,7 +49,7 @@ bool bufferCircularMete( bufferCircular_t* pBuffer, double valor )
         if (pBuffer->numElementos < NUMELEMENTOS)
         {
             (pBuffer->valor)[pBuffer->cabeza++] = valor;
-            ESP_LOGD(pBuffer->tag, "Introducido valor: %f en posición %d", (pBuffer->valor)[(pBuffer->cabeza)-1], (pBuffer->cabeza)-1);
+            ESP_LOGD(pBuffer->tag, "Valor: %f en posición %d", (pBuffer->valor)[(pBuffer->cabeza)-1], (pBuffer->cabeza)-1);
 
             pBuffer->cabeza = pBuffer->cabeza % NUMELEMENTOS;
             pBuffer->numElementos++;
@@ -83,7 +85,7 @@ bool bufferCircularSaca( bufferCircular_t* pBuffer, double* pValor )
         if (pBuffer->numElementos)
         {
             *pValor = (pBuffer->valor)[pBuffer->cola++];
-            ESP_LOGD(pBuffer->tag, "Retirado valor: %f de posición %d", *pValor, (pBuffer->cola)-1);
+            ESP_LOGD(pBuffer->tag, "Saca valor: %f de posición %d", *pValor, (pBuffer->cola)-1);
 
             pBuffer->cola = pBuffer->cola % NUMELEMENTOS;
             pBuffer->numElementos--;

@@ -4,6 +4,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
+#define LOG_LOCAL_LEVEL ESP_LOG_INFO
 #include "esp_log.h"
 
 #include "myTaskConfig.h"
@@ -47,7 +48,7 @@ void tareaMedia(void* pParametros)
         /* Espera a la siguiente activación */  
         xTaskDelayUntil(&activacionPrevia, periodo);
         pConfig->numActivaciones++;
-        ESP_LOGI(pConfig->tag, "Numero de activaciones: %lu", pConfig->numActivaciones);
+        ESP_LOGD(pConfig->tag, "Numero de activaciones: %lu", pConfig->numActivaciones);
 
         /* Prepara el cálculo de la nueva media */
         valorMedio = 0.0;
@@ -56,7 +57,7 @@ void tareaMedia(void* pParametros)
         /* Lee y acumula las medidas tomadas hasta este momento */
         while (!bufferCircularVacio(pLecturas)) {
             bufferCircularSaca(pLecturas, &medida);
-            valorMedio =+ medida;
+            valorMedio += medida;
             numValores++;
         }
         if (numValores) {
@@ -66,6 +67,9 @@ void tareaMedia(void* pParametros)
             if (!bufferCircularMete(pMedias, valorMedio)) {
                 continuar = false;
             }
+
+            ESP_LOGI(pConfig->tag, "Valor medio: %f", valorMedio);
+            ESP_LOGD(pConfig->tag, "a partir de %d datos", numValores);
         }
     }
 
